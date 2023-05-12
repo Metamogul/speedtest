@@ -13,6 +13,7 @@ For it's functionality the app depends on `speedtest` CLI by Ookla. This depende
 ## ToDos ##
 
 - Pass all options as arguments and remove hardcoded paths
+- Tests
 - Create `brew` package for MacOS
 - Include binary(s) in release
 - Create distributable format for other OSes
