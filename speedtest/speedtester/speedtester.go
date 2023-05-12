@@ -2,12 +2,14 @@ package speedtester
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"log"
-	"os"
 	"os/exec"
 	"syscall"
 	"time"
+
+	"github.com/Metamogul/speedtest/resultfile"
 )
 
 const (
@@ -18,7 +20,7 @@ const (
 
 type SpeedTester struct {
 	filePath            string
-	file                *os.File
+	file                *resultfile.ResultFile
 	testIntervalMinutes int
 	testDurationHours   int
 	ticker              *time.Ticker
@@ -50,10 +52,17 @@ func NewSpeedTester(filePath string, testIntervalMinutes int, testDurationHours 
 
 func (t *SpeedTester) Initialize() {
 	var err error
-	t.file, err = os.OpenFile(t.filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-		panic("Could no open file for writing.")
+	t.file, err = resultfile.OpenResultFile(t.filePath)
+
+	var resultFileErr resultfile.ResultFileError
+	if errors.As(err, &resultFileErr) {
+		panic(resultFileErr.Error())
 	}
+
+	if err != nil {
+		panic(fmt.Sprintf("Could not open file for writing: %s", err.Error()))
+	}
+
 	log.Printf("Writing all test results to %s\n", t.filePath)
 }
 
@@ -70,7 +79,7 @@ func (t *SpeedTester) ScheduleStopAsync() {
 }
 
 func (t *SpeedTester) run(done chan bool) {
-	t.performSingleTest(true)
+	t.performSingleTest(t.file.WasEmpty)
 
 	t.ticker = time.NewTicker(time.Duration(t.testIntervalMinutes) * time.Minute)
 	for {

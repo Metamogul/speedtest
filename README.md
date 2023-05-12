@@ -12,8 +12,6 @@ For it's functionality the app depends on `speedtest` CLI by Ookla. This depende
 
 ## ToDos ##
 
-- Validate file to append to if file exists
-- Don't rewrite header if files contains header
 - Pass all options as arguments and remove hardcoded paths
 - Create `brew` package for MacOS
 - Include binary(s) in release
