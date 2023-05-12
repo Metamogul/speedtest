@@ -106,7 +106,9 @@ func (t *SpeedTester) performSingleTest(withHeader bool) {
 	}
 
 	if result != nil {
-		t.appendResultToFile(string(result))
+		resultString := string(result)
+		resultString = addTimestampToResult(resultString)
+		t.appendResultToFile(resultString)
 	}
 
 	log.Println("Finished performing test, output written to", t.filePath)
@@ -117,7 +119,7 @@ func execCommand(path string, arg ...string) *exec.Cmd {
 	cmd.SysProcAttr = &syscall.SysProcAttr{
 		Setpgid: true,
 	}
-	
+
 	return cmd
 }
 
