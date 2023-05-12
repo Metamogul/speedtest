@@ -12,6 +12,7 @@ For it's functionality the app depends on `speedtest` CLI by Ookla. This depende
 
 ## ToDos ##
 
+- Include timestamp in rows and extend header with an appropriate field
 - Pass all options as arguments and remove hardcoded paths
 - Create `brew` package for MacOS
 - Include binary(s) in release
