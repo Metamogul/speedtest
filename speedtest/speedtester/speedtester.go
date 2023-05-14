@@ -12,12 +12,6 @@ import (
 	"github.com/Metamogul/speedtest/resultfile"
 )
 
-const (
-	testIntervalMinutesDefault = 5
-	testIntervalMinutesMin     = 1
-	testDurationHoursDefault   = 6
-)
-
 type SpeedTester struct {
 	filePath            string
 	file                *resultfile.ResultFile
@@ -27,24 +21,12 @@ type SpeedTester struct {
 	stop                chan bool
 }
 
-func NewSpeedTester(filePath string, testIntervalMinutes int, testDurationHours int) *SpeedTester {
+func NewSpeedTester(filePath string, testIntervalMinutes, testDurationHours int) *SpeedTester {
 	tester := &SpeedTester{
 		filePath:            filePath,
-		testIntervalMinutes: testIntervalMinutesDefault,
-		testDurationHours:   testDurationHoursDefault,
+		testIntervalMinutes: testIntervalMinutes,
+		testDurationHours:   testDurationHours,
 		stop:                make(chan bool, 1),
-	}
-
-	if testIntervalMinutes != 0 {
-		tester.testIntervalMinutes = testIntervalMinutes
-	}
-
-	if tester.testIntervalMinutes < testIntervalMinutesMin {
-		tester.testIntervalMinutes = testIntervalMinutesMin
-	}
-
-	if testDurationHours != 0 {
-		tester.testDurationHours = testDurationHours
 	}
 
 	return tester
@@ -143,6 +125,10 @@ func (t *SpeedTester) appendResultToFile(result string) {
 }
 
 func (t *SpeedTester) scheduleStop() {
+	if t.testDurationHours == 0 {
+		return
+	}
+	
 	// TODO: Correct back to actual time
 	time.Sleep(time.Duration(t.testDurationHours) * time.Hour)
 

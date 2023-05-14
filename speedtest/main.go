@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -10,13 +11,66 @@ import (
 	"github.com/Metamogul/speedtest/speedtester"
 )
 
+const (
+	testIntervalMinutesDefault = 5
+	testIntervalMinutesMin     = 1
+	testDurationHoursDefault   = 6
+	usage                      = `Usage of ./speedtest-series:
+  -f, --filepath string
+        Full path including filename of the result file
+  -d, --test-duration-hours int
+        Duration after which to terminate the test series. Pass 0 to continue indefenitely (default 6)
+  -i, --test-interval-minutes int
+        Interval in between single tests, provided in minutes (default 5)`
+)
+
 func main() {
-	tester := speedtester.NewSpeedTester("/Users/Jan/output.csv", 1, 0)
+	filePath, testIntervalMinutes, testDurationHours, err := parseAndValidateArguments()
+
+	if err != nil {
+		log.Printf("Error validating arguments: %v\n", err)
+	}
+
+	tester := speedtester.NewSpeedTester(filePath, testIntervalMinutes, testDurationHours)
 
 	startLookingForTerminationSignal(tester)
 	<-performTest(tester)
 
 	tester.Cleanup()
+}
+
+func parseAndValidateArguments() (filePath string, testIntervalMinutes int, testDurationHours int, err error) {
+	flag.StringVar(&filePath, "filepath", "", "Full path including filename of the result file")
+	flag.StringVar(&filePath, "f", "", "Full path including filename of the result file")
+	flag.IntVar(&testIntervalMinutes, "test-interval-minutes", 5, "Interval in between single tests, provided in minutes")
+	flag.IntVar(&testIntervalMinutes, "i", 5, "Interval in between single tests, provided in minutes")
+	flag.IntVar(&testDurationHours, "test-duration-hours", 6, "Duration after which to terminate the test series. Pass 0 to continue indefenitely")
+	flag.IntVar(&testDurationHours, "d", 6, "Duration after which to terminate the test series. Pass 0 to continue indefenitely")
+
+	flag.Usage = func() {
+		fmt.Println(usage)
+	}
+
+	flag.Parse()
+
+	if filePath == "" {
+		userHome, err := os.UserHomeDir()
+		if err != nil {
+			return "", 0, 0, err
+		}
+
+		filePath = userHome + "/result.csv"
+	}
+
+	if testIntervalMinutes == 0 {
+		testIntervalMinutes = testIntervalMinutesDefault
+	}
+
+	if testIntervalMinutes < testIntervalMinutesMin {
+		testIntervalMinutes = testIntervalMinutesMin
+	}
+
+	return
 }
 
 func performTest(tester *speedtester.SpeedTester) chan bool {
