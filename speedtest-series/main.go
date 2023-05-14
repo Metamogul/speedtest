@@ -15,13 +15,17 @@ const (
 	testIntervalMinutesDefault = 5
 	testIntervalMinutesMin     = 1
 	testDurationHoursDefault   = 6
-	usage                      = `Usage of ./speedtest-series:
+	usage                      = `Usage of speedtest-series:
+  
   -f, --filepath string
         Full path including filename of the result file
   -d, --test-duration-hours int
         Duration after which to terminate the test series. Pass 0 to continue indefenitely (default 6)
   -i, --test-interval-minutes int
-        Interval in between single tests, provided in minutes (default 5)`
+        Interval in between single tests, provided in minutes (default 5)
+	
+  --help
+        Display this help`
 )
 
 func main() {

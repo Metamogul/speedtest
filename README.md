@@ -10,6 +10,20 @@ Clone the repository ( `git clone git@github.com:Metamogul/speedtest.git` ), `cd
 
 For it's functionality the app depends on `speedtest` CLI by Ookla. This dependency is not included. Please follow the [offical directions](https://www.speedtest.net/de/apps/cli) on how to install.
 
+## Usage ##
+
+Usage of speedtest-series:
+
+	-f, --filepath string
+		Full path including filename of the result file
+	-d, --test-duration-hours int
+		Duration after which to terminate the test series. Pass 0 to continue indefenitely (default 6)
+	-i, --test-interval-minutes int
+		Interval in between single tests, provided in minutes (default 5)
+ 	
+	--help
+		Display this help
+
 ## ToDos ##
 
 - Option for additinal log file instead of outputting logs only to stdout
