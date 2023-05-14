@@ -30,11 +30,11 @@ type ResultFile struct {
 func OpenResultFile(filePath string) (*ResultFile, error) {
 	fileInfo, err := os.Stat(filePath)
 
-	if err != nil {
+	if err != nil && !strings.Contains(err.Error(), "no such file or directory") {
 		return nil, err
 	}
 
-	wasEmpty := fileInfo.Size() == 0
+	wasEmpty := fileInfo == nil || fileInfo.Size() == 0
 
 	file, err := os.OpenFile(filePath, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0644)
 
