@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Metamogul/speedtest/resultfile"
+	"github.com/Metamogul/speedtest-series/resultfile"
 )
 
 func addTimestampToResult(result string) string {

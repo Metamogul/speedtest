@@ -8,7 +8,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/Metamogul/speedtest/speedtester"
+	"github.com/Metamogul/speedtest-series/speedtester"
 )
 
 const (

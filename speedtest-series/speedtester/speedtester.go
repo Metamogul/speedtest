@@ -9,7 +9,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/Metamogul/speedtest/resultfile"
+	"github.com/Metamogul/speedtest-series/resultfile"
 )
 
 type SpeedTester struct {
