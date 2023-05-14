@@ -1,6 +1,6 @@
 # speedtest-series
 
-This a little command line utility built on top of [Ookla's speedtest tool](https://www.speedtest.net/de/apps/cli). It executes that tool in regular intervals until a given time has passed and records the output as time series in a single CSV table. This project is still WIP. To modify any options you'll need to change the source code. Take a look at the ToDos below for what's yet to be implemented. 
+This a little command line utility built on top of [Ookla's speedtest tool](https://www.speedtest.net/de/apps/cli). It executes that tool in regular intervals until a given time has passed and records the output as time series in a single CSV table. This project is still WIP. Take a look at the ToDos below for what's yet to be implemented. 
 
 ## Building ##
 
