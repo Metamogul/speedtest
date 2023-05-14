@@ -13,10 +13,12 @@ For it's functionality the app depends on `speedtest` CLI by Ookla. This depende
 ## ToDos ##
 
 - Pass all options as arguments and remove hardcoded paths
+- Option for additinal log file instead of outputting logs only to stdout
 - Tests
 - Create `brew` package for MacOS
 - Include binary(s) in release
 - Create distributable format for other OSes
+- Option to use stdout for result output instead of outputting logs
 
 ## Contributing ##
 
