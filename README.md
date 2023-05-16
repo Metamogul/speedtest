@@ -26,6 +26,7 @@ Usage of speedtest-series:
 
 ## ToDos ##
 
+- In case of zero connectivity generate and write row with zero/N.A. values as well as "connection lost" notice
 - Option for additinal log file instead of outputting logs only to stdout
 - Tests
 - Create `brew` package for MacOS
